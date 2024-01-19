@@ -1,0 +1,48 @@
+@Metadata.layer: #CORE
+annotate view ZC_FE_Booking_001271
+  with 
+{
+
+    @UI.facet: [  
+         {
+         position : 10,
+         type: #FIELDGROUP_REFERENCE,
+         targetQualifier: 'Booking',
+         label: 'booking Ansicht'
+         }]
+         
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:10 }]
+  BookingID;
+  @UI.lineItem: [{ position: 20 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:20 }]
+  BookingDate;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:30 }]
+  FlightDate;
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:40 }]
+  FlightPrice;
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:50 }]
+  CurrencyCode;
+  @UI.lineItem: [{ position: 60 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:60 }]
+  CreatedBy;
+  @UI.lineItem: [{ position: 70 }]
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:70 }]
+  Carriername;
+  
+
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:80 }]
+  CustomerID;
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:90 }]
+  CarrierID;
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:100 }]
+  ConnectionID;
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:110 }]
+  FirstName;
+  @UI.fieldGroup: [{ qualifier: 'Booking',position:120 }]
+  LastName;
+
+}

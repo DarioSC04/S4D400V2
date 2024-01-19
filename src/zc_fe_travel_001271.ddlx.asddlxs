@@ -1,0 +1,108 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: { 
+                  typeNamePlural: 'Travels',
+                  typeName: 'Travel',
+                  title: { type: #STANDARD, value: 'Description' },
+                  description: { type: #STANDARD, value: 'TravelID' }
+                }
+annotate view ZC_FE_Travel_001271 with
+{
+  @UI.facet: [{
+       purpose: #HEADER,
+       position: 10,
+       type: #DATAPOINT_REFERENCE,
+       targetQualifier: 'PriceData'
+   }, {
+       purpose: #HEADER,
+       position: 20,
+       type: #DATAPOINT_REFERENCE,
+       targetQualifier: 'StatusData'
+   },
+   {
+       label: 'General Information',
+       type:  #COLLECTION,
+       id: 'GeneralInfo',
+       position: 10
+   },
+   {
+       label: 'General',
+       type: #IDENTIFICATION_REFERENCE,
+       parentId: 'GeneralInfo' ,
+       purpose: #STANDARD,
+       position: 10
+   },
+   {
+       label: 'Prices',
+       purpose: #STANDARD,
+       position: 20,
+       type: #FIELDGROUP_REFERENCE,
+       parentId: 'GeneralInfo',
+       targetQualifier: 'PricesGroup'
+   },{
+       label: 'Dates',
+       purpose: #STANDARD,
+       position: 30,
+        type: #FIELDGROUP_REFERENCE,
+       parentId: 'GeneralInfo',
+       targetQualifier: 'DatesGroup'
+   },{     
+       position: 30,    
+       label: 'Booking',    
+       type: #LINEITEM_REFERENCE,    
+       targetElement: '_Booking'   
+   }]
+   
+  @UI.lineItem:
+  [
+    { position: 20, dataAction: 'CancelTravel', label: 'Cancel Travel', type: #FOR_ACTION },
+    { position: 10 },
+    { position: 40, dataAction: 'ConfirmBooking', label: 'Confirm Booking', type: #FOR_ACTION }
+  ]
+
+  @UI.identification: [{ position: 10 }]
+  TravelID;
+
+  @UI.lineItem: [{ position: 20 }]
+  @UI.selectionField: [{ position:10 }]
+  @UI.identification: [{ position: 20 }]
+  AgencyID;
+
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position:20 }]
+  @UI.identification: [{ position: 30 }]
+  FirstName;
+  
+  @UI.lineItem: [{ position: 35 }]
+  @UI.selectionField: [{ position:25 }]
+  @UI.identification: [{ position: 35 }]
+  LastName;
+
+  @UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'DatesGroup', position: 10 }]
+  BeginDate;
+
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ qualifier: 'DatesGroup', position: 0 }]
+  EndDate;
+  
+
+  @UI.lineItem: [{ position: 80 }]
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 10 }]
+  BookingFee;
+
+  @UI.lineItem: [{ position: 70 }]
+  @UI.dataPoint: { qualifier: 'PriceData', title: 'Total Price' }
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 20}]
+  TotalPrice;
+
+  @UI.lineItem: [{ position: 60 /*criticality: 'OverallStatusCriticality'*/ /*  Add the criticality only if you added the corresponding code in the projection view, see the corresponding exercise*/}]
+  @UI.selectionField: [{ position:30 }]
+  @UI.textArrangement: #TEXT_ONLY
+  @UI.dataPoint: { qualifier: 'StatusData', title: 'Status' /*criticality: 'OverallStatusCriticality'*/ /*  Add the criticality only if you added the corresponding code in the projection view, see the corresponding exercise*/ }
+  OverallStatus;
+
+  @UI.lineItem: [{ position: 90 }]
+  LastChangedAt;
+  @UI.fieldGroup: [{ qualifier: 'PricesGroup', position: 20}]
+  CustomerID;
+}

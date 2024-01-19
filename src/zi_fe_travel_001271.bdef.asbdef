@@ -1,0 +1,112 @@
+managed implementation in class ZBP_I_FE_TRAVEL_001271 unique;
+//with draft;
+
+define behavior for ZI_FE_Travel_001271 alias Travel
+//implementation in class ZBP_I_FE_Travel_001271 unique
+persistent table zfe_atrav_001271
+//draft table ZFE_DTRAV_001271
+//etag master LocalLastChangedAt
+lock master //total etag LastChangedAt
+
+{
+  field ( readonly )
+  TravelID,
+  TotalPrice;
+
+
+  field ( readonly, numbering : managed )
+  TravelUUID;
+
+
+  create;
+  update;
+  delete;
+
+  //  draft action Edit;
+  //  draft action Activate;
+  //  draft action Discard;
+  //  draft action Resume;
+  //  draft determine action Prepare;
+
+  validation validateprice on save { field TotalPrice; }
+  validation ValidateDates on save { create; }
+  action CancelTravel result [1] $self;
+  action ConfirmBooking result [1] $self;
+
+
+  mapping for zfe_atrav_001271
+    {
+      TravelUUID         = TRAVEL_UUID;
+      TravelID           = TRAVEL_ID;
+      AgencyID           = AGENCY_ID;
+      CustomerID         = CUSTOMER_ID;
+      BeginDate          = BEGIN_DATE;
+      EndDate            = END_DATE;
+      BookingFee         = BOOKING_FEE;
+      TotalPrice         = TOTAL_PRICE;
+      CurrencyCode       = CURRENCY_CODE;
+      Description        = DESCRIPTION;
+      OverallStatus      = OVERALL_STATUS;
+      CreatedBy          = CREATED_BY;
+      CreatedAt          = CREATED_AT;
+      LastChangedBy      = LAST_CHANGED_BY;
+      LastChangedAt      = LAST_CHANGED_AT;
+      LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    }
+
+  association _Booking { create; }
+
+  determination CalculateTravelID on save { create; }
+}
+
+define behavior for ZI_FE_Booking_001271 alias Booking
+//implementation in class ZBP_I_FE_Booking_001271 unique
+persistent table zfe_abook_001271
+//draft table ZFE_DBOOK_001271
+//etag master LocalLastChangedAt
+lock dependent by _Travel
+
+{
+  field ( readonly )
+  TravelUUID,
+  BookingID,
+  CustomerID;
+
+  field ( numbering : managed, readonly )
+  BookingUUID;
+
+  field( mandatory : create )
+  CarrierID,
+  ConnectionID,
+  FlightDate,
+  FlightPrice;
+
+
+  update;
+  delete;
+
+  mapping for zfe_abook_001271
+    {
+      BookingUUID        = BOOKING_UUID;
+      TravelUUID         = TRAVEL_UUID;
+      BookingID          = BOOKING_ID;
+      BookingDate        = BOOKING_DATE;
+      CustomerID         = CUSTOMER_ID;
+      CarrierID          = CARRIER_ID;
+      ConnectionID       = CONNECTION_ID;
+      FlightDate         = FLIGHT_DATE;
+      FlightPrice        = FLIGHT_PRICE;
+      CurrencyCode       = CURRENCY_CODE;
+      CreatedBy          = CREATED_BY;
+      LastChangedBy      = LAST_CHANGED_BY;
+      LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    }
+
+  association _Travel; //{ with draft; }
+
+  determination CalculateBookingID on save { create; }
+  determination Custemerid on save { create; }
+  determination BokkingDatetoToday on save { create; }
+
+  determination CalculateTotalPrice on save { field FlightPrice; }
+}
